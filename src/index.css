@@ -1,0 +1,10 @@
+@import '~bulma/css/bulma.css';
+@import url('https://fonts.googleapis.com/css?family=Boogaloo|Jua');
+
+body {
+  font-family: 'Jua', sans-serif;
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+}

@@ -17,25 +17,33 @@ class App extends Component {
     // Consume the pokemons
   }
 
-  componentDidMount() {
-    axios.get('https://pokeapi.co/api/v2/pokemon/')
-    .then(response => {
-        const pokemons = response.data.results.slice(0, 20);
-        const updatePokemons = pokemons.map(pokemon => {                   
-          return {
-            ...pokemon            
-          }
-        })
-        this.setState({pokemons: updatePokemons});        ;
-    });
+  componentDidMount() {fetch('https://pokeapi.co/api/v2/pokemon?limit=5')
+    .then((res)=>{ return res.json() }).then(async (res)=>{
+      const pokemons = res.results;
+      const updatePokemons = await Promise.all(
+        pokemons.map(async (pokemon) => await (await fetch(pokemon.url)
+        .then(response => { return response.json() }).then((response)=>{
+          pokemon.experience = response.base_experience;
+          pokemon.ability = response.abilities[0].ability.name;
+          pokemon.type = response.types[0].type.name;          
+          return pokemon
+        })))
+      )    
+      this.setState({pokemons: updatePokemons})
+    }).catch((e)=>{
+      console.log(e)
+    })
   }
 
   render() {
-    const pokemons = this.state.pokemons.map((pokemon, index) =>{
+    const pokemons = this.state.pokemons.map((pokemon, index) => {
       return <Pokemon
         id={index + 1}
         key={pokemon.url}
-        name={pokemon.name}/>        
+        name={pokemon.name}
+        ability={pokemon.ability}
+        type={pokemon.type}
+        experience={pokemon.experience}/>        
     })
     return (
       <div className="App">

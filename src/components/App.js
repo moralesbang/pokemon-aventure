@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount() {
     axios.get('https://pokeapi.co/api/v2/pokemon/')
     .then(response => {
-        const pokemons = response.data.results.slice(0, 10);
+        const pokemons = response.data.results.slice(0, 20);
         const updatePokemons = pokemons.map(pokemon => {                   
           return {
             ...pokemon            

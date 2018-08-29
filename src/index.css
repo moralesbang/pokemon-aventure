@@ -8,3 +8,22 @@ body {
 input, select, textarea, button {
   font-family: inherit;
 }
+
+.pokemon-list {
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  grid-gap: 20px;
+}
+
+figure.is-centered {
+  margin: 0 auto;
+}
+
+.pokemon {
+  border-radius: 5px
+}
+
+.pokemon .button {
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+}

@@ -1,25 +1,58 @@
-import React from 'react';
+import React, { Component } from 'react'
 
-const pokemon = (props) => (
-    <div className="card">
+
+class Pokemon extends Component {
+  
+  constructor(props) {
+    super(props)
+    this.state = { attributes: [] }
+  }
+
+  componentWillMount() {
+    const requestPokemonAwait = async () => {
+      const response = await fetch(this.props.url)
+      const json = await response.json();
+      this.setState({attributes: json})
+    }
+    requestPokemonAwait()
+    console.log(this.setState)
+  }
+
+  render() {
+    // const abilities = this.state.attributes.abilities.map(ability => {
+    //   <li>{ability}</li>
+    // })
+
+    return(
+      <div className="card pokemon">
         <div className="card-image">
-          <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.id}.png`} />
+          <figure className="image is-128x128 is-centered">
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.state.attributes.id}.png`}
+              alt={this.state.attributes.name + " image"} />
+          </figure>
         </div>
-    
+        
         <div className="card-content">
-            <h4>Name: {props.name}</h4>
-            <p>Experience: {props.experience}</p>
-            <p>Type: {props.type}</p>
-            <p>Ability: {props.ability}</p>
+          <div className="media-content">
+            <p className="title is-4">{this.state.attributes.name}</p>
+          </div>
+          <h4>Name: {this.state.attributes.name}</h4>
+          
+          <label className="label">Abilities:</label>
+          <ol>
+            {/* {abilities} */}
+          </ol>
         </div>
-
+            
         <footer className="card-footer">
-            <button className="button is-primary">
+          <button className="button is-primary">
             Capture
-            </button>
+          </button>
         </footer>
-    </div>
+      </div>
+    )
+  }
+}
 
-)
-
-export default pokemon;
+export default Pokemon

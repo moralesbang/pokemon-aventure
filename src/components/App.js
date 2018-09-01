@@ -1,17 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './App.css'
+import pokemons from '../data/pokemons_data'
+import Pokemon from './Pokemon'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      myPokemons: [],
-      pokemons: []
+      pokedex: []
     }
   }
 
-  componentWillMount() {
-    // Consume the pokemons
+  catchPokemon = pokemon => {
+    const randy = Math.floor(Math.random() * 10) % 2
+    if(randy === 0){
+      this.setState({
+        pokedex: this.state.pokedex.concat(pokemon)
+      })
+    } else {
+      alert(`${pokemon.name} have escaped!`);
+    }
   }
 
   render() {
@@ -20,12 +28,15 @@ class App extends Component {
         <section className="section">
           <div className="container">
             <div className="columns is-centered">
-              <div className="column is-8">
-                <h5 class="title is-5">
-                  Pokemons Captured: {this.state.myPokemons.length}
-                </h5>
+              <div className="column is-10">
+                <h4 className="title is-4">
+                  Pokemons Captured: {this.state.pokedex.length}
+                </h4>
+                <h5 className="subtitle is-5">Gotta catch 'em all!</h5>
 
-                {/* Put pokemons here */}
+                <div className="pokemon-list">
+                  {pokemons.map((pokemon, index) => <Pokemon key={index} onCatch={this.catchPokemon} attributes={pokemon} />)}
+                </div>
               </div>
             </div>
           </div>

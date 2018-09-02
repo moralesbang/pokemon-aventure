@@ -3,8 +3,43 @@
 
 body {
   font-family: 'Jua', sans-serif;
+  background-color: #fafafa;
 }
 
 input, select, textarea, button {
   font-family: inherit;
+}
+
+.pokemon-list {
+  display: grid;
+  grid-template-columns: repeat(3, 32%);
+  justify-content: center;
+  grid-gap: 1rem;
+}
+
+figure.is-centered {
+  margin: 0 auto;
+}
+
+.pokemon {
+  border-radius: 5px
+}
+
+.pokemon .button {
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+}
+
+.pokemon .table {
+  margin-top: 1.5rem
+}
+
+.pokemon .card-content {
+  margin-bottom: 1.5rem
+}
+
+.pokemon .card-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

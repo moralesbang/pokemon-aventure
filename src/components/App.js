@@ -1,17 +1,31 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './App.css'
+import Pokemon from './Pokemon'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      myPokemons: [],
-      pokemons: []
+      pokemons: [],
+      pokedex: []
     }
   }
 
   componentWillMount() {
-    // Consume the pokemons
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=15')
+      .then(response => response.json())
+      .then(pokemons => this.setState({pokemons: pokemons.results}))
+  }
+
+  catchThem = pokemon => {
+    const randy = Math.floor(Math.random() * 10) % 2
+    if(randy === 0){
+      this.setState({
+        pokedex: this.state.pokedex.concat(pokemon)
+      })
+    } else {
+      alert("Pokemon salvaje ha escapado!");
+    }
   }
 
   render() {
@@ -20,12 +34,15 @@ class App extends Component {
         <section className="section">
           <div className="container">
             <div className="columns is-centered">
-              <div className="column is-8">
-                <h5 class="title is-5">
-                  Pokemons Captured: {this.state.myPokemons.length}
-                </h5>
+              <div className="column is-10">
+                <h4 className="title is-4">
+                  Pokemons Captured: {this.state.pokedex.length}   
+                </h4>
+                <h5 className="subtitle is-5">Selecciona el pokemon que quieres atrapar</h5>
 
-                {/* Put pokemons here */}
+                <div className="pokemon-list">
+                  {this.state.pokemons.map((pokemon, index) => <Pokemon key={index} url={pokemon.url} onCatch={this.catchThem} />)}
+                </div>
               </div>
             </div>
           </div>
